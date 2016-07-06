@@ -1,3 +1,0 @@
-export FLASK_APP=/src/friskabot.py
-export FLASK_DEBUG=1
-flask run
