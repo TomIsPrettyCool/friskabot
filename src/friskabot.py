@@ -1,25 +1,18 @@
 from flask import Flask, request
-
-
+from commands import ProcessCommand
 app = Flask(__name__)
-
-commands = ['/order', '/availiable','/view', '/menu']
 
 
 @app.route('/api/')
 def api():
     args = request.args
-    command = args.get('command')
 
-    init_command = command.split(' ')[0]
-
-    if init_command in commands:
-        return 'yay'
+    command = ProcessCommand(args)
+    if command.verify_token():
+        return command.process_command()
     else:
-        return 'arse'
+        return 'Failed request. Invalid token'
 
-def order():
-    pass
 
-def availiable():
-    pass
+
+
