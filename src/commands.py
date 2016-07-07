@@ -52,7 +52,7 @@ class ProcessCommand:
         return string
 
     def view(self):
-        query = Orders.query().soup_array
+        query = Orders.query()
         return_string = "```"
         for x in query:
             return_string += "{} ordered {} \n".format(x.user_name, x.order)
