@@ -19,8 +19,7 @@ def api():
     else:
         return 'Failed request. Invalid token'
 
-@app.route('/migrate/')
+@app.route('/update/')
 def migrate():
-    db.create_all()
-    return 'Created DB'
+    GetSoup().soup_to_list()
 

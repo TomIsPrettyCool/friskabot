@@ -1,0 +1,4 @@
+cron:
+- description: Update friska
+- url: /update/
+- schedule: every 1 hours
