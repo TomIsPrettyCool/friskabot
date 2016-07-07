@@ -1,4 +1,4 @@
-from models import Orders
+from models import Orders, Soups
 commands = ["order", "soups", "view", "me", "help"]
 import json
 
@@ -23,8 +23,8 @@ class ProcessCommand:
 
         with open('config.json', 'r') as config:
             token = json.load(config)['token']
-
-        if self.token == token:
+        print(str(token))
+        if self.token in token:
             return 'Token Verified'
         else:
             return False
@@ -45,15 +45,14 @@ class ProcessCommand:
         return 'Order Submitted/Updated'
 
     def soups(self):
-        with open('soups.json') as cache:
-            soups = json.load(cache)
+        soups = Soups.get_by_id(id='soup')
         string = ""
-        for soup in soups["soups"]:
+        for soup in soups.soup_array:
             string += soup + " | "
         return string
 
     def view(self):
-        query = Orders.query()
+        query = Orders.query().soup_array
         return_string = "```"
         for x in query:
             return_string += "{} ordered {} \n".format(x.user_name, x.order)
