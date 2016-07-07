@@ -1,4 +1,4 @@
-from models import Orders, db
+from models import Orders
 commands = ["order", "soups", "view", "me", "help"]
 import json
 
@@ -36,10 +36,9 @@ class ProcessCommand:
         order_string = ""
         for order_text in self.data_parsed[1:]:
             order_string += order_text + " "
-        payload = Orders(self.user_id, self.user_name, order_string)
-        db.session.add(payload)
-        db.session.commit()
-        return 'Order Submitted, now beg someone to go get it :' + order_string
+        order = Orders(id=self.user_id, user_name=self.user_name, order=order_string)
+        response = order.put()
+        return 'Order Submitted/Updated'
 
     def soups(self):
         with open('soups.json') as cache:
@@ -50,7 +49,7 @@ class ProcessCommand:
         return string
 
     def view(self):
-        query = Orders.query.order_by(Orders.id)
+        query = Orders.query()
         return_string = "```"
         for x in query:
             return_string += "{} ordered {} \n".format(x.user_name, x.order)

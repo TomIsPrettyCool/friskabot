@@ -1,8 +1,6 @@
 from bs4 import BeautifulSoup
 import urllib2
-import threading
-import time
-import json
+from models import *
 
 
 class GetSoup:
@@ -23,11 +21,10 @@ class GetSoup:
         for row in self.rows:
             soups.append(row.get_text())
         print str(soups)
-        self.cache_soup({'soups': soups})
+        self.cache_soup(soups)
         #  Run once an hour
 
     def cache_soup(self, payload):
-
-        with open('soups.json', 'w') as soupcache:
-            json.dump(payload, soupcache)
+        soups = Soups(soup_array=payload, id='soup')
+        soups.put()
 
