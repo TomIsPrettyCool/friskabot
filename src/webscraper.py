@@ -8,8 +8,8 @@ class GetSoup:
 
     def __init__(self):
         # http = requests.get(self.friskamenu, headers={'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.106 Safari/537.36'})
-        http = urllib2.urlopen(self.friskamenu)
-        html = http.read()
+        request = urllib2.Request(self.friskamenu, headers={'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.106 Safari/537.36'})
+        html = urllib2.urlopen(request).read()
 
         self.soup = BeautifulSoup(html, 'html.parser')
         self.table = self.soup.find_all('table')[2]
