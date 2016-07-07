@@ -1,14 +1,15 @@
 from flask import Flask, request
+from flask_sqlalchemy import SQLAlchemy
 from commands import ProcessCommand
 from webscraper import GetSoup
-from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
-
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///friska.db'
-db = SQLAlchemy(app)
 
-GetSoup().extract_backround()
+GetSoup().soup_to_list()
+
+from models import db
+db.init_app(app)
 
 
 @app.route('/api/')
@@ -21,6 +22,8 @@ def api():
     else:
         return 'Failed request. Invalid token'
 
-
-
+@app.route('/migrate/')
+def migrate():
+    db.create_all()
+    return 'Created DB'
 

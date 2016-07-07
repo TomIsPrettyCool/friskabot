@@ -1,2 +1,5 @@
 Flask
 google-api-python-client
+flask-sqlalchemy
+beautifulsoup4
+urllib2

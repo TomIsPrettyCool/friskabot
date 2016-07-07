@@ -1,15 +1,15 @@
-from friskabot import db
+from flask_sqlalchemy import SQLAlchemy
+from google.appengine.ext import ndb
 
-
-class Orders(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.String(50))
-    user_name = db.Column(db.String(100))
-    order = db.Column(db.String(1000))
+class Orders(ndb.Model):
+    user_id = ndb.StringProperty()
+    user_name = ndb.StringProperty()
+    order = ndb.StringProperty()
 
     def __init__(self, id, name, order):
         self.user_id = id
         self.user_name = name
         self.order = order
+
 
 
