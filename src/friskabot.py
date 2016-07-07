@@ -1,6 +1,7 @@
 from flask import Flask, request
 from commands import ProcessCommand
 from webscraper import GetSoup
+import json
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///friska.db'

@@ -20,7 +20,11 @@ class ProcessCommand:
         """
         Verify request is legitimate
         """
-        if self.token == 'hhOF3oMoHROCcXP1aWEIgig7':
+
+        with open('config.json', 'r') as config:
+            token = json.load(config)['token']
+
+        if self.token == token:
             return 'Token Verified'
         else:
             return False
