@@ -1,4 +1,4 @@
 cron:
 - description: Update friska
-- url: /update/
-- schedule: every 2 hours
+ url: /update/
+ schedule: every 2 hours
