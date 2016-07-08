@@ -75,4 +75,4 @@ class ProcessCommand:
 
 
     def help(self):
-        return 'Self explanatory'
+        return 'This needs to be done.'
