@@ -1,7 +1,9 @@
 from models import Orders, Soups
-commands = ["order", "soups", "view", "me", "help"]
+from google.appengine.ext import ndb
+commands = ["order", "soups", "view", "take", "help"]
 import json
-
+import urllib2
+import urllib
 
 class ProcessCommand:
     def __init__(self, data):
@@ -58,8 +60,19 @@ class ProcessCommand:
             return_string += "{} ordered {} \n".format(x.user_name, x.order)
         return return_string + "```"
 
-    def me(self):
-        return 'You are now designated to get orders'
+    def take(self):
+        query = Orders.query()
+        return_string = "You need to get:```"
+        for x in query:
+            return_string += "{} for {} \n".format(x.order, x.user_name)
+            x.key.delete()
+        args = {"response_type": "in_channel",
+            "text": "{} has agreed to go and get your orders! :smile:".format(self.user_name)}
+        request = urllib2.Request(self.url_to_return)
+        request.add_header('content-type', 'application/json')
+        resp = urllib2.urlopen(request, json.dumps(args))
+        return return_string + "```"
+
 
     def help(self):
         return 'Self explanatory'
