@@ -46,13 +46,13 @@ class ProcessCommand:
 
     def soups(self):
         soups = Soups.get_by_id(id='soup')
-        string = ""
+        string = "```"
         for soup in soups.soup_array:
-            string += soup + " | "
-        return string
+            string += soup + "\n"   #Dodgy formatting
+        return "The soups today are: \n```" + string[:-2] + "```" #Chop end off string to account for previous mistakes
 
     def view(self):
-        query = Orders.query().soup_array
+        query = Orders.query()
         return_string = "```"
         for x in query:
             return_string += "{} ordered {} \n".format(x.user_name, x.order)
